@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog-nest-backend-production.up.railway.app/api/v1/stripe';
+const BASE_URL = 'http://localhost:5000/api/v1/stripe';
 
 //create a plan
 export const paymentIntentAPI = async (planId) => {

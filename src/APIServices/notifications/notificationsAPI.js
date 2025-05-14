@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog-nest-backend-production.up.railway.app/api/v1/notifications';
+const BASE_URL = 'http://localhost:5000/api/v1/notifications';
 
 //Fetch all notifications
 export const fetchNotificationsAPI = async () => {

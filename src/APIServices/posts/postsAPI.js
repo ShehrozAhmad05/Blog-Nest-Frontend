@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog-nest-backend-production.up.railway.app/api/v1/posts';
+const BASE_URL = 'http://localhost:5000/api/v1/posts';
 
 //create a post
 export const createPostAPI = async (postData) => {
