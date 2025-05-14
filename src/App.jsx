@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreatePost from "./components/Posts/CreatePost";
 import PostsList from "./components/Posts/PostsList";
-import PublicNavBar from "./components/NavBar/PublicNavBar";
 import UpdatePost from "./components/Posts/UpdatePost";
 import Home from "./components/Home/Home";
 import PostDetails from "./components/Posts/PostDetails";
@@ -36,6 +35,7 @@ import Settings from "./components/User/SettingsPage";
 import AddEmailComponent from "./components/User/UpdateEmail";
 import UploadProfilePic from "./components/User/UploadProfilePic";
 import UsersLists from "./components/User/UserLists";
+import PublicNavbar from "./components/NavBar/PublicNavbar";
 // import UpdatePost from './components/Posts/UpdatePost'
 
 function App() {
@@ -55,7 +55,7 @@ function App() {
   return (
     <BrowserRouter>
       {/*Navbar */}
-      {userAuth ? <PrivateNavbar /> : <PublicNavBar />}
+      {userAuth ? <PrivateNavbar /> : <PublicNavbar />}
       {/* <PublicNavBar/> */}
       <Routes>
         <Route element={<Home />} path="/" />
