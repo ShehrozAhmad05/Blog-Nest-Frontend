@@ -39,23 +39,27 @@ import PublicNavbar from "./components/NavBar/PublicNavbar";
 // import UpdatePost from './components/Posts/UpdatePost'
 
 function App() {
-  const { isError, isLoading, isSuccess, data, error, refetch } = useQuery({
-    queryKey: ["user-auth"],
-    queryFn: checkAuthStatusAPI,
-  });
+  // const { isError, isLoading, isSuccess, data, error, refetch } = useQuery({
+  //   queryKey: ["user-auth"],
+  //   queryFn: checkAuthStatusAPI,
+  // });
 
-  //dispatch
-  const dispatch = useDispatch();
+  // //dispatch
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(isAuthenticated(data));
+  // }, [data]);
+
+  let token = localStorage.getItem('token');
   useEffect(() => {
-    dispatch(isAuthenticated(data));
-  }, [data]);
-
+    token = localStorage.getItem('token');
+  }, [token]);
   //get the login user from store
   const { userAuth } = useSelector((state) => state.auth);
   return (
     <BrowserRouter>
       {/*Navbar */}
-      {userAuth ? <PrivateNavbar /> : <PublicNavbar />}
+      {token ? <PrivateNavbar /> : <PublicNavbar />}
       {/* <PublicNavBar/> */}
       <Routes>
         <Route element={<Home />} path="/" />

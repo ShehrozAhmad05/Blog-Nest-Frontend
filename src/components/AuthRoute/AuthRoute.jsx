@@ -1,28 +1,51 @@
-import React from 'react'
-import Login from '../User/Login'
-import { useQuery } from '@tanstack/react-query'
-import { checkAuthStatusAPI } from '../../APIServices/users/usersAPI'
-import { Navigate } from 'react-router-dom'
-import AuthCheckingComponent from './AuthCheckingComponent'
+import React, { useEffect, useState } from 'react';
+import { checkAuthStatusAPI } from '../../APIServices/users/usersAPI';
+import { Navigate } from 'react-router-dom';
+import AuthCheckingComponent from './AuthCheckingComponent';
 
 const AuthRoute = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const token = localStorage.getItem('token');
 
-    const { isError, isLoading, isSuccess, data, error, refetch } = useQuery({
-        queryKey: ['user-auth'],
-        queryFn: checkAuthStatusAPI
-    })
-    console.log(data)
+  useEffect(() => {
+    const verifyUser = async () => {
+      try {
+        if (!token) {
+          setIsAuthenticated(false);
+          setIsLoading(false);
+          return;
+        }
 
-    //for loading
-    if (isLoading) return <AuthCheckingComponent />
-    //in case a user is not logged in
-    if (!data) {
-        return <Navigate to='/login' />
-    }
-    //render
-    return children
+        const res = await checkAuthStatusAPI(token);
+        console.log("Auth Response:", res);
 
+        if (res?.isAuthenticated) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        console.error("Auth Check Failed:", err);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-}
+    verifyUser();
+  }, [token]);
 
-export default AuthRoute
+  // While checking authentication
+  if (isLoading) return <AuthCheckingComponent />;
+
+  // If user is not authenticated
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  // If authenticated
+  return children;
+};
+
+export default AuthRoute;

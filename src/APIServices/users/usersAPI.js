@@ -21,12 +21,15 @@ export const loginAPI = async (userData) => {
         {
             withCredentials: true
         })
+        console.log(response.data)
+        localStorage.setItem('token', response.data.token);
+        //document.cookie = `token=${response.data.token}; path=/; max-age=3600; secure; samesite=Strict`;
     return response.data
 }
 
 //Check AuthStatusAPI for user
-export const checkAuthStatusAPI = async () => {
-    const response = await axios.get(`${BASE_URL}/users/checkAuthenticated`,
+export const checkAuthStatusAPI = async (token) => {
+    const response = await axios.post(`${BASE_URL}/users/checkAuthenticated`,{token: token},
         {
             withCredentials: true
         })

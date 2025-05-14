@@ -32,6 +32,7 @@ export default function PrivateNavbar() {
     logoutMutation
     .mutateAsync()
     .then(() => {
+      localStorage.removeItem('token');
       dispatch(logout(null))
       navigate("/login")
     }).catch((err) => console.log(err));
